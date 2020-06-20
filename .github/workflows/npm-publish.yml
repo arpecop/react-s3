@@ -11,6 +11,8 @@ jobs:
                 node-version: [12.x]
         steps:
             - uses: actions/checkout@v1
+            - uses: actions/checkout@master
+            - uses: chrnorm/deployment-action@releases/v1
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v1
               with:
@@ -24,3 +26,4 @@ jobs:
               with:
                   deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
                   publish_dir: ./build
+            - name: Upload to s3
