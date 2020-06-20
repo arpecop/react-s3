@@ -25,11 +25,10 @@ jobs:
                   deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
                   publish_dir: ./build
             #dsdsad
-
+            - name: ls
+              run: ls -la
             - uses: actions/checkout@master
-            - name: Use Node.js ${{ matrix.node-version }}
             - uses: jakejarvis/s3-sync-action@master
-            - name: Use Node.js ${{ matrix.node-version }}
               with:
                   args: --acl public-read --follow-symlinks --delete
               env:
