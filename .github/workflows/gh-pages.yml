@@ -15,8 +15,6 @@ jobs:
               uses: actions/setup-node@v1
               with:
                   node-version: ${{ matrix.node-version }}
-            - name: Replace homepage
-              run: sed -h
             - name: Install Packages
               run: npm install
             - name: Build page
