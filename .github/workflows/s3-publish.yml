@@ -1,36 +1,39 @@
-name: S3Publish
+name: Production Build
 on:
-    push:
-        branches: [gh-pages]
     pull_request:
-        branches: [gh-pages]
+    push:
+        branches:
+            - master
 jobs:
-    preview:
+    build:
         runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                node-version: [8.x, 10.x, 12.x]
+
         steps:
-            - uses: actions/checkout@master
-            - uses: chrnorm/deployment-action@releases/v1
-              name: Create GitHub deployment
-              id: test
+            - uses: actions/checkout@v1
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v1
               with:
-                  token: ${{ secrets.TOKEN}}
-                  description: 'Preview my app'
-                  environment: preview
-
-            - uses: shallwefootball/s3-upload-action@master
-              name: Upload S3
-              id: S3
+                  node-version: ${{ matrix.node-version }}
+            - name: Yarn Install
+              run: |
+                  yarn install
+            - name: Production Build
+              run: |
+                  yarn build
+            - name: Unit Tests
+              run: |
+                  yarn test
+            - name: Deploy to S3
+              uses: jakejarvis/s3-sync-action@master
               with:
-                  aws_key_id: ${{ secrets.AWS_KEY_ID }}
-                  aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
-                  aws_bucket: 'arpecop.com'
-                  source_dir: 'static'
-
-            - name: Update deployment status (success)
-              if: success()
-              uses: chrnorm/deployment-status@releases/v1
-              with:
-                  token: ${{ secrets.TOKEN }}
-                  target_url: https://aws-bucket.s3.ap-northeast-2.amazonaws.com/${{steps.S3.outputs.object_key}}/index.html
-                  state: 'success'
-                  deployment_id: ${{ steps.test.outputs.deployment_id }}
+                  args: --acl public-read --delete
+              env:
+                  AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
+                  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  AWS_REGION: ${{ secrets.AWS_REGION }}
+                  SOURCE_DIR: 'build'
