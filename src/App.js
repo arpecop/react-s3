@@ -5,8 +5,8 @@ function App() {
         <div className="App">
             <header className="App-header">
                 <p>
-                    Edit <code>src/App.jsdasdasdasdas</code> dsadasand save to
-                    relodasdasdad.
+                    Edit <code>src/App.jsdasdasdasdsadasdas</code> dsadasand
+                    save to relodasdasdad.
                 </p>
                 <a
                     className="App-link"
