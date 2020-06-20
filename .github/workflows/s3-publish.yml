@@ -1,8 +1,9 @@
 name: S3Publish
 on:
     push:
-        branches:
-            - gh-pages
+        branches: [gh-pages]
+    pull_request:
+        branches: [gh-pages]
 jobs:
     preview:
         runs-on: ubuntu-latest
