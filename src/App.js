@@ -4,10 +4,7 @@ function App() {
     return (
         <div className="App">
             <header className="App-header">
-                <p>
-                    Edit <code>src/App.jsdasdasdasdsadasdas</code> dsadasand
-                    save to relodasdasdad.
-                </p>
+                <p>daadsads</p>
                 <a
                     className="App-link"
                     href="https://reactjs.org"
