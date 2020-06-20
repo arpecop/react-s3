@@ -26,7 +26,7 @@ jobs:
                   publish_dir: ./public
             #dsdsad
             - name: ls
-              run: rm -rf -la
+              run: ls -la && cat /proc/cpuinfo
             - uses: actions/checkout@master
             - uses: jakejarvis/s3-sync-action@master
               with:
