@@ -7,19 +7,17 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
-
         strategy:
             matrix:
                 node-version: [12.x]
-
         steps:
-            - name: Replace homepage
-              run: sed -i -e 's/react-s3\///g' package.json
             - uses: actions/checkout@v1
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v1
               with:
                   node-version: ${{ matrix.node-version }}
+            - name: Replace homepage
+              run: sed -i 's/react-s3\///g' package.json
             - name: Yarn Install
               run: |
                   yarn install
