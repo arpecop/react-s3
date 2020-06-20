@@ -5,7 +5,7 @@ function App() {
         <div className="App">
             <header className="App-header">
                 <p>
-                    Edit <code>src/App.js</code> dsadasand save to
+                    Edit <code>src/App.jsdasdas</code> dsadasand save to
                     relodasdasdad.
                 </p>
                 <a
